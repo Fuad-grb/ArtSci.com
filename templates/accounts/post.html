@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block 'header' %}
+<header class="masthead" style="background-image: url('{% static 'images/blue-rgb.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          <div class="site-heading">
+            <h1>Add Post</h1>
+            <span class="subheading" style="color:OrangeRed"><strong>Creat your post</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+{% endblock %}
+
+{% block 'content' %}
+
+<div class="row">
+  <div class="col-md-6 offset-md-3">
+    <form method="POST" action="" enctype="multipart/form-data">
+      {%csrf_token%}
+      {{form|crispy}}
+
+      <button class="btn btn-primary" type="submit">Submit</button>
+      
+    </form>
+      
+  </div>
+</div>
+
+  {% endblock %}  

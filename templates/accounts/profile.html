@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'header' %}
+<header class="masthead" style="background-image: url('{% static 'images/profile.jpg' %}')">
+    <div class="overlay"></div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-8 col-md-10 mx-auto">
+          {% csrf_token %}
+          <div class="site-heading">
+            <h1>{{request.user.get_full_name}}</h1>
+            <span class="subheading" style="color:OrangeRed"><h1><strong>Home Page</strong></h1></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<div class="row">
+  <div class="col-3">
+    <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Posts</a>
+      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Profile settings</a>
+    </div>
+  </div>
+  <script src="https://kit.fontawesome.com/625e39251e.js" crossorigin="anonymous"></script>
+  <div class="col-9">
+    <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+        <table class="table table-bordered table-hover table-striped">
+          <div class="text-right">
+            <a href="{% url 'add_post' %}" class="btn btn-primary"><h4>Share</h4>
+              <i class="fas fa-2x fa-plus-square"></i></a>
+          </div>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Title</th>
+              <th>Image</th>
+              <th>Created At</th>
+              <th>Preview</th>
+              <th>Status</th>
+              <th>Operations</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for post in posts %}
+              <tr>
+                <td>{{ post.id }}</td>
+                <td>{{ post.title }}</td>
+                <td><img src="{{ post.image.url }}" alt="{{ post.title }}" style="width: 60px;"></td>
+                <td>{{ post.created_at }}</td>
+                <td>{{ post.preview }}</td>
+                <td>
+                  {% if post.status is 'publish' %}
+                    <span class="badge badge-success">Published</span>
+                  {% else %}
+                    <span class="badge badge-warning">Draft</span>
+                  {% endif %}
+                </td>
+                <td>
+                  <button class="btn btn-xs btn-warning"><i class="fa fa-edit"></i></button>
+                  <button class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></button>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">...</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
